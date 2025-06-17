@@ -1,0 +1,55 @@
+# Sentinair Configuration File
+
+# System Settings
+system:
+  platform: auto  # auto, linux, windows
+  stealth_mode: false
+  admin_password_hash: ""  # Will be set during setup
+  
+# Detection Settings
+detection:
+  # Behavioral tracking
+  track_file_access: true
+  track_usb_events: true
+  track_app_launches: true
+  track_user_behavior: true
+  
+  # Anomaly detection
+  anomaly_threshold: 0.7  # 0.0 to 1.0
+  training_interval_hours: 24
+  min_training_samples: 1000
+  
+  # Alert settings
+  alert_severity_threshold: "medium"  # low, medium, high, critical
+  max_alerts_per_hour: 10
+  
+# Machine Learning
+ml:
+  model_type: "isolation_forest"  # isolation_forest, autoencoder
+  contamination_rate: 0.1
+  n_estimators: 100
+  random_state: 42
+  
+# Storage
+storage:
+  max_log_size_mb: 500
+  log_retention_days: 30
+  auto_cleanup: true
+  
+# GUI Settings
+gui:
+  theme: "dark"  # dark, light
+  window_size: [1200, 800]
+  refresh_interval_seconds: 5
+  
+# Reporting
+reporting:
+  auto_generate_daily: true
+  report_formats: ["pdf", "csv"]
+  include_graphs: true
+  
+# Security
+security:
+  encrypt_logs: true
+  secure_delete: true
+  tamper_detection: true
