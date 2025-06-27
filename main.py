@@ -15,7 +15,6 @@ project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
 from core.engine import SentinairEngine
-from gui.main_window import SentinairGUI
 from cli.cli_interface import SentinairCLI
 from utils.config import Config
 from utils.logger import setup_logging
@@ -67,8 +66,14 @@ def main():
         # Start application based on mode
         if args.mode == "gui":
             logger.info("Starting Sentinair in GUI mode")
-            app = SentinairGUI(engine, config)
-            app.run()
+            try:
+                from gui.main_window import SentinairGUI
+                app = SentinairGUI(engine, config)
+                app.run()
+            except ImportError as e:
+                logger.error(f"GUI mode not available: {e}")
+                logger.info("Try installing GUI dependencies or use --mode cli")
+                return 1
             
         elif args.mode == "cli":
             logger.info("Starting Sentinair in CLI mode")

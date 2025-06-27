@@ -324,12 +324,30 @@ class DatabaseManager:
                 cursor.execute('''
                     SELECT timestamp, event_type, event_data, risk_score, is_anomaly
                     FROM system_events 
-                    WHERE timestamp >= ?
+                    WHERE timestamp >= ? AND event_data IS NOT NULL AND event_data != ''
                     ORDER BY timestamp DESC
                     LIMIT ?
                 ''', (since_date, limit))
                 
-                return [dict(row) for row in cursor.fetchall()]
+                events = []
+                for row in cursor.fetchall():
+                    try:
+                        event = dict(row)
+                        # Parse JSON event_data if it's a string
+                        if isinstance(event['event_data'], str) and event['event_data'].strip():
+                            event['event_data'] = json.loads(event['event_data'])
+                        elif not event['event_data']:
+                            # Skip events with empty event_data
+                            continue
+                        events.append(event)
+                    except json.JSONDecodeError as je:
+                        self.logger.warning(f"Skipping event with invalid JSON: {je}")
+                        continue
+                    except Exception as ee:
+                        self.logger.warning(f"Skipping problematic event: {ee}")
+                        continue
+                
+                return events
                 
         except Exception as e:
             self.logger.error(f"Error getting recent events: {e}")

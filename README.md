@@ -100,390 +100,84 @@ python main.py
 ## 🚀 Quick Start
 
 ```bash
-# Clone the repository
-git clone https://github.com/yashab-cyber/sentinair.git
+# 1. Extract/clone the project
 cd sentinair
 
-# Install dependencies
+# 2. Install dependencies
 pip install -r requirements.txt
 
-# Run setup
+# 3. Run initial setup
 python setup.py
 
-# Start in GUI mode
-python main.py --gui
-
-# Or start in CLI mode
-python main.py --cli
+# 4. Start the application
+python main.py --gui    # GUI mode
+python main.py --cli    # CLI mode
+python main.py --stealth # Background mode
 ```
 
-## Usage
+## 📚 Documentation
 
-### GUI Mode
-```bash
-python main.py --gui
-```
+### Complete User Manual
+The `/manual` directory contains comprehensive documentation:
 
-### CLI Mode
-```bash
-python main.py --cli
-```
+- **[Installation Guide](manual/01-installation.md)** - Detailed setup instructions for all platforms
+- **[Quick Start Guide](manual/02-quickstart.md)** - Get up and running in minutes
+- **[Configuration Guide](manual/03-configuration.md)** - Customize system settings
+- **[GUI User Guide](manual/04-gui-guide.md)** - Navigate the graphical interface
+- **[CLI User Guide](manual/05-cli-guide.md)** - Master the command line
+- **[Machine Learning Guide](manual/10-machine-learning.md)** - Understanding AI detection
+- **[Troubleshooting](manual/13-troubleshooting.md)** - Solve common issues
+- **[Command Reference](manual/18-command-reference.md)** - Complete command guide
 
-### Stealth Mode
-```bash
-python main.py --stealth
-```
+👉 **Start with the [Manual Overview](manual/README.md)**
+
+### Additional Documentation
+- **[Deployment Guide](DEPLOYMENT.md)** - Production deployment checklist
+- **[User Guide](USER_GUIDE.md)** - Legacy user documentation
+- **[Contributing](CONTRIBUTING.md)** - Development and contribution guidelines
+- **[Security Policy](SECURITY.md)** - Security practices and reporting
 
 ## Architecture
 
-### Complete Directory Structure
-```
-sentinair/
-├── alerts/                          # Alert Management System
-│   ├── __init__.py                 # Alert module initialization
-│   └── alert_manager.py            # Alert creation, management, and notifications
-│
-├── cli/                            # Command Line Interface
-│   ├── __init__.py                 # CLI module initialization
-│   └── cli_interface.py            # Interactive command-line interface
-│
-├── config/                         # Configuration Files
-│   └── default.yaml                # Default system configuration
-│
-├── core/                           # Core Detection Engine
-│   ├── __init__.py                 # Core module initialization
-│   ├── engine.py                   # Main detection engine and orchestrator
-│   └── monitors/                   # Monitoring Components
-│       ├── __init__.py             # Monitors module initialization
-│       ├── behavior_monitor.py     # User behavior pattern monitoring
-│       ├── file_monitor.py         # File system access monitoring
-│       ├── process_monitor.py      # Process launch and behavior monitoring
-│       └── usb_monitor.py          # USB device event monitoring
-│
-├── examples/                       # Example Scripts and Demos
-│   ├── api_usage.py               # API usage examples and demonstrations
-│   └── deploy.py                  # Deployment and installation script
-│
-├── install/                        # Installation Scripts
-│   ├── README.md                  # Installation instructions and troubleshooting
-│   ├── install_ubuntu.sh          # Ubuntu/Debian installation script
-│   ├── install_centos.sh          # CentOS/RHEL/Fedora installation script
-│   ├── install_kali.sh            # Kali Linux installation script
-│   ├── install_windows.ps1        # Windows PowerShell installation script
-│   └── install_windows.bat        # Windows batch installation script
-│
-├── gui/                           # Graphical User Interface
-│   ├── __init__.py                # GUI module initialization
-│   ├── alerts_widget.py           # Alert display and management widget
-│   ├── dashboard_widget.py        # Main dashboard with system status
-│   └── main_window.py             # Main application window
-│
-├── ml/                            # Machine Learning Components
-│   ├── __init__.py                # ML module initialization
-│   └── anomaly_detector.py        # Anomaly detection using ML algorithms
-│
-├── reports/                       # Report Generation System
-│   ├── __init__.py                # Reports module initialization
-│   └── report_generator.py        # PDF/CSV report generation
-│
-├── signatures/                    # Signature-based Detection
-│   └── default.yar                # YARA rules for malware detection
-│
-├── utils/                         # Utility Modules
-│   ├── __init__.py                # Utils module initialization
-│   ├── config.py                  # Configuration management
-│   ├── database.py                # Database operations and management
-│   ├── encryption.py              # Data encryption and security
-│   └── logger.py                  # Logging system configuration
-│
-├── hi.txt                         # Original project specification
-├── main.py                        # Main application entry point
-├── README.md                      # Project documentation
-├── requirements.txt               # Python dependencies
-├── setup.py                       # Installation and setup script
-├── test_sentinair.py             # Comprehensive test suite
-├── USER_GUIDE.md                 # Detailed user documentation
-└── DONATE.md                     # Support and funding information
+### Core Components
 
-# Runtime Directories (Created during setup/operation)
-data/                              # Local Data Storage
-├── logs/                          # Application logs
-├── models/                        # Trained ML models
-├── reports/                       # Generated reports
-└── sentinair.db                   # SQLite database
-
-logs/                              # Log Files
-├── sentinair.log                  # Main application log
-└── error.log                      # Error logs
-```
-
-### Component Overview
-
-| Directory | Purpose | Key Files |
+| Component | Purpose | Key Files |
 |-----------|---------|-----------|
-| **alerts/** | Alert management and notifications | `alert_manager.py` |
+| **core/** | Main detection engine and monitors | `engine.py`, `monitors/` |
+| **ml/** | Machine learning anomaly detection | `anomaly_detector.py` |
+| **gui/** | Graphical user interface | `main_window.py`, dashboard/alerts widgets |
 | **cli/** | Command-line interface | `cli_interface.py` |
-| **config/** | Configuration management | `default.yaml` |
-| **core/** | Main detection engine | `engine.py` |
-| **core/monitors/** | System monitoring components | `file_monitor.py`, `usb_monitor.py`, `process_monitor.py`, `behavior_monitor.py` |
-| **examples/** | Usage examples and deployment | `api_usage.py`, `deploy.py` |
-| **gui/** | Graphical user interface | `main_window.py`, `dashboard_widget.py`, `alerts_widget.py` |
-| **install/** | Installation scripts | `install_ubuntu.sh`, `install_centos.sh`, `install_kali.sh`, `install_windows.ps1`, `install_windows.bat` |
-| **ml/** | Machine learning components | `anomaly_detector.py` |
+| **alerts/** | Alert management system | `alert_manager.py` |
 | **reports/** | Report generation | `report_generator.py` |
-| **signatures/** | Signature-based detection | `default.yar` |
-| **utils/** | Utility functions | `config.py`, `database.py`, `encryption.py`, `logger.py` |
+| **utils/** | Core utilities | `config.py`, `database.py`, `logger.py` |
+| **config/** | Configuration files | `default.yaml` |
+| **signatures/** | YARA detection rules | `default.yar` |
+| **install/** | Installation scripts | Platform-specific installers |
+| **manual/** | User documentation | Comprehensive guides |
 
-### Detailed File Descriptions
+### Monitoring Capabilities
+- **File System**: Track file access, creation, deletion, and modifications
+- **USB Devices**: Monitor device insertion/removal and suspicious devices  
+- **Processes**: Application launches and executable analysis
+- **User Behavior**: Privacy-preserving activity pattern analysis
 
-#### Core Application Files
-- **`main.py`** - Application entry point with argument parsing and mode selection
-- **`setup.py`** - Complete installation wizard with database initialization and admin setup
-- **`test_sentinair.py`** - Comprehensive test suite for all components
-- **`requirements.txt`** - Python package dependencies
-- **`README.md`** - Project documentation and setup instructions
-- **`USER_GUIDE.md`** - Detailed user manual and troubleshooting guide
-- **`DONATE.md`** - Support and funding information for the project
-
-#### Core Engine (`core/`)
-- **`engine.py`** - Main orchestrator that coordinates all monitoring components
-  - Event processing and queuing
-  - Anomaly detection integration
-  - Periodic model training
-  - Alert generation and management
-
-#### Monitoring Components (`core/monitors/`)
-- **`file_monitor.py`** - File system monitoring using watchdog
-  - Tracks file access, creation, deletion, and modification
-  - Monitors sensitive directories
-  - Detects unusual file patterns
-  
-- **`usb_monitor.py`** - USB device event detection
-  - Cross-platform USB device monitoring
-  - Device insertion/removal tracking
-  - Suspicious device identification
-  
-- **`process_monitor.py`** - Process and application monitoring
-  - Application launch detection
-  - Suspicious executable identification
-  - Command-line argument analysis
-  
-- **`behavior_monitor.py`** - User behavior pattern analysis
-  - Privacy-preserving keystroke timing analysis
-  - Mouse movement pattern tracking
-  - Activity/idle period monitoring
-
-#### Machine Learning (`ml/`)
-- **`anomaly_detector.py`** - ML-based anomaly detection system
-  - Isolation Forest implementation
-  - Autoencoder support (optional)
-  - Feature extraction and preprocessing
-  - Model training and persistence
-
-#### User Interfaces
-##### GUI (`gui/`)
-- **`main_window.py`** - PyQt5 main application window
-  - Dark theme interface
-  - Menu system and window management
-  - Status bar and navigation
-  
-- **`dashboard_widget.py`** - Real-time system dashboard
-  - Live monitoring status
-  - Performance metrics
-  - System health indicators
-  
-- **`alerts_widget.py`** - Alert management interface
-  - Alert list and filtering
-  - Severity-based color coding
-  - Acknowledgment and dismissal
-
-##### CLI (`cli/`)
-- **`cli_interface.py`** - Interactive command-line interface
-  - Command parsing and execution
-  - Status display and reporting
-  - Configuration management
-
-#### Utility Modules (`utils/`)
-- **`config.py`** - YAML configuration management
-  - Dot-notation value access
-  - Configuration validation
-  - Runtime setting modifications
-  
-- **`database.py`** - SQLite database operations
-  - Event logging and storage
-  - Query optimization
-  - Database maintenance
-  
-- **`encryption.py`** - Data security and encryption
-  - AES encryption for sensitive data
-  - Key management
-  - Secure data handling
-  
-- **`logger.py`** - Comprehensive logging system
-  - Rotating log files
-  - Multiple log levels
-  - Performance monitoring
-
-#### Alert System (`alerts/`)
-- **`alert_manager.py`** - Alert lifecycle management
-  - Alert creation and categorization
-  - Notification system
-  - Alert persistence and history
-
-#### Reporting (`reports/`)
-- **`report_generator.py`** - Multi-format report generation
-  - PDF reports with ReportLab
-  - CSV data exports
-  - Chart and graph generation
-  - Automated scheduling
-
-#### Configuration (`config/`)
-- **`default.yaml`** - System configuration template
-  - Detection parameters
-  - ML model settings
-  - Security configurations
-  - GUI preferences
-
-#### Signatures (`signatures/`)
-- **`default.yar`** - YARA malware detection rules
-  - Suspicious executable patterns
-  - Network activity detection
-  - USB threat signatures
-  - Data exfiltration patterns
-
-#### Examples (`examples/`)
-- **`api_usage.py`** - Programmatic API usage examples
-  - Basic monitoring setup
-  - Custom alert handling
-  - Configuration management
-  
-- **`deploy.py`** - Production deployment assistant
-  - System requirement checks
-  - Dependency installation
-  - Service configuration
-
-#### Installation Scripts (`install/`)
-- **`README.md`** - Installation guide and troubleshooting
-- **`install_ubuntu.sh`** - Ubuntu/Debian automated installation
-  - System package installation (python3, pip, SQLite)
-  - Python dependency installation
-  - Service configuration and startup
-  - Desktop shortcut creation
-  
-- **`install_centos.sh`** - CentOS/RHEL/Fedora automated installation
-  - YUM/DNF package management
-  - SELinux configuration
-  - Firewall setup
-  
-- **`install_kali.sh`** - Kali Linux specialized installation
-  - Penetration testing tool integration
-  - Security-focused configuration
-  
-- **`install_windows.ps1`** - Windows PowerShell installation
-  - Automatic Python installation
-  - Windows service creation
-  - Windows Defender exclusions
-  - Desktop shortcuts and Start menu integration
-  
-- **`install_windows.bat`** - Windows batch installation (simplified)
-  - Basic installation for systems without PowerShell
-  - Manual Python dependency check
-
-### File Count Summary
-```
-Total Files: 53
-├── Python Files (.py): 29
-├── Configuration Files (.yaml/.yar): 2
-├── Documentation (.md): 9 (README, USER_GUIDE, DONATE, CONTRIBUTING, SECURITY, etc.)
-├── Installation Scripts (.sh/.ps1/.bat): 5
-├── GitHub Files: 6 (.github templates, workflows, issue templates)
-├── Project Files: 2 (LICENSE, .gitignore)
-└── All files verified and present ✅
-
-Module Distribution:
-├── Core Engine: 6 files (engine.py + 5 monitors)
-├── Utilities: 6 files (config, database, encryption, logger + __init__)
-├── GUI Components: 4 files (main_window, dashboard, alerts + __init__)
-├── Machine Learning: 2 files (anomaly_detector + __init__)
-├── Alerts: 2 files (alert_manager + __init__)
-├── CLI: 2 files (cli_interface + __init__)
-├── Reports: 2 files (report_generator + __init__)
-├── Examples: 2 files (api_usage, deploy)
-├── Installation Scripts: 6 files (5 installers + README.md)
-├── Main Application: 3 files (main.py, setup.py, test_sentinair.py)
-├── Documentation: 9 files (README, USER_GUIDE, DONATE, CONTRIBUTING, SECURITY, etc.)
-└── GitHub Integration: 6 files (templates, workflows, CI/CD)
-```
-
-## Security
-- No internet connectivity required
-- Encrypted local data storage
-- Self-contained operation
-- Admin authentication for sensitive operations
+## Security Features
+- **Offline Operation**: No internet connectivity required
+- **Encrypted Storage**: AES-encrypted local data storage
+- **Self-Contained**: Complete standalone operation
+- **Admin Authentication**: Secure access for sensitive operations
+- **Stealth Mode**: Hidden background operation
 
 ## License
-MIT License - See LICENSE file for details
+MIT License - See [LICENSE](LICENSE) file for details
 
-## Project Status & Verification
-
-### ✅ Complete Implementation Status
-
-All components have been successfully implemented and verified:
-
-#### Core Functionality
-- ✅ **Detection Engine** - Fully implemented with event processing and ML integration
-- ✅ **Monitoring System** - All 4 monitors (File, USB, Process, Behavior) implemented
-- ✅ **Machine Learning** - Isolation Forest and Autoencoder support
-- ✅ **Alert System** - Multi-level alerting with persistence
-- ✅ **Database System** - SQLite-based storage with encryption
-
-#### User Interfaces
-- ✅ **GUI Interface** - PyQt5-based dark theme dashboard
-- ✅ **CLI Interface** - Full-featured command-line interface
-- ✅ **Stealth Mode** - Background operation with authentication
-
-#### Security & Utilities
-- ✅ **Encryption** - AES-based data protection
-- ✅ **Configuration** - YAML-based flexible configuration
-- ✅ **Logging** - Comprehensive logging system
-- ✅ **Reports** - PDF/CSV report generation
-- ✅ **YARA Integration** - Signature-based detection
-
-#### Documentation & Testing
-- ✅ **User Guide** - Complete documentation
-- ✅ **API Examples** - Usage demonstrations
-- ✅ **Test Suite** - Comprehensive component testing
-- ✅ **Deployment Scripts** - Production-ready installation
-
-### 🚀 Quick Start Verification
-
-To verify the complete installation, run:
-
-```bash
-# 1. Verify all files are present
-python test_sentinair.py
-
-# 2. Run setup (first time only)
-python setup.py
-
-# 3. Test the application
-python main.py --mode cli
-```
-
-### 📊 Project Metrics
-
-- **Lines of Code**: 3,000+ lines of Python
-- **Test Coverage**: 11 comprehensive test modules
-- **Documentation**: 95% coverage with examples
-- **Platform Support**: Windows 10+ and Linux
-- **Dependencies**: 18 carefully selected packages
-- **Security Features**: Encryption, stealth mode, offline operation
-
----
-
-*Project completed on June 17, 2025 - All requirements from hi.txt have been fully implemented.*
-
----
+## Production Ready
+This project has been cleaned and prepared for deployment:
+- ✅ All test and debug files removed
+- ✅ Comprehensive documentation in `/manual` directory  
+- ✅ Production installation scripts ready
+- ✅ Security hardened and validated
+- ✅ See [DEPLOYMENT.md](DEPLOYMENT.md) for deployment checklist
 
 ## 🏢 About ZehraSec
 

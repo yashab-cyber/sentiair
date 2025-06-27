@@ -124,7 +124,7 @@ class ProcessMonitor:
             event_data = {
                 'event_type': 'termination',
                 'process_id': pid,
-                'timestamp': datetime.now()
+                'timestamp': datetime.now().isoformat()
             }
             
             if self.callback:

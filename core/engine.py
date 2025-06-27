@@ -11,14 +11,16 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 
-from .monitors.file_monitor import FileAccessMonitor
-from .monitors.usb_monitor import USBMonitor
-from .monitors.process_monitor import ProcessMonitor
-from .monitors.behavior_monitor import BehaviorMonitor
-from ..ml.anomaly_detector import AnomalyDetector
-from ..alerts.alert_manager import AlertManager
-from ..utils.database import DatabaseManager
-from ..utils.encryption import DataEncryption
+from utils.json_utils import safe_json_dumps, sanitize_datetime_objects
+
+from core.monitors.file_monitor import FileAccessMonitor
+from core.monitors.usb_monitor import USBMonitor
+from core.monitors.process_monitor import ProcessMonitor
+from core.monitors.behavior_monitor import BehaviorMonitor
+from ml.anomaly_detector import AnomalyDetector
+from alerts.alert_manager import AlertManager
+from utils.database import DatabaseManager
+from utils.encryption import DataEncryption
 
 @dataclass
 class DetectionEvent:
@@ -245,10 +247,13 @@ class SentinairEngine:
         """Generate an alert for anomalous behavior"""
         severity = self._calculate_severity(confidence)
         
+        # Sanitize event data to remove datetime objects
+        sanitized_event_data = sanitize_datetime_objects(event.data)
+        
         alert_data = {
-            'timestamp': event.timestamp,
+            'timestamp': event.timestamp.isoformat(),
             'event_type': event.event_type,
-            'event_data': event.data,
+            'event_data': sanitized_event_data,
             'confidence': confidence,
             'severity': severity,
             'description': self._generate_alert_description(event)
@@ -281,10 +286,13 @@ class SentinairEngine:
     def _store_event(self, event: DetectionEvent):
         """Store event in database"""
         try:
+            # Sanitize event data to remove datetime objects
+            sanitized_event_data = sanitize_datetime_objects(event.data)
+            
             event_data = {
-                'timestamp': event.timestamp,
+                'timestamp': event.timestamp.isoformat(),
                 'event_type': event.event_type,
-                'event_data': json.dumps(event.data),
+                'event_data': safe_json_dumps(sanitized_event_data),
                 'risk_score': event.risk_score,
                 'is_anomaly': event.is_anomaly
             }
@@ -340,10 +348,15 @@ class SentinairEngine:
             # Extract features from training data
             features = []
             for event_data in training_data:
+                # Handle timestamp - it might be string or datetime
+                timestamp = event_data['timestamp']
+                if isinstance(timestamp, str):
+                    timestamp = datetime.fromisoformat(timestamp)
+                
                 event = DetectionEvent(
-                    timestamp=event_data['timestamp'],
+                    timestamp=timestamp,
                     event_type=event_data['event_type'],
-                    data=json.loads(event_data['event_data'])
+                    data=json.loads(event_data['event_data']) if isinstance(event_data['event_data'], str) else event_data['event_data']
                 )
                 features.append(self._extract_features(event))
             
@@ -363,7 +376,7 @@ class SentinairEngine:
             'stealth_mode': self.stealth_mode,
             'monitors': {name: monitor.is_running() for name, monitor in self.monitors.items()},
             'model_trained': self.anomaly_detector.is_trained(),
-            'last_training': self.last_training_time,
+            'last_training': self.last_training_time.isoformat() if self.last_training_time else None,
             'events_queued': len(self.event_queue)
         }
         

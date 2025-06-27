@@ -374,7 +374,7 @@ class BehaviorMonitor:
         if self.callback:
             self.callback('user_behavior', {
                 'behavior_type': event_type,
-                'timestamp': datetime.now(),
+                'timestamp': datetime.now().isoformat(),
                 **event_data
             })
             

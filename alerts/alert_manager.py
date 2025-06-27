@@ -12,6 +12,8 @@ from typing import Dict, List, Any, Callable, Optional
 from collections import defaultdict, deque
 import json
 
+from utils.json_utils import sanitize_datetime_objects
+
 try:
     from plyer import notification
     PLYER_AVAILABLE = True
@@ -54,18 +56,23 @@ class AlertManager:
             # Generate unique alert ID
             alert_id = int(time.time() * 1000000)  # Microsecond timestamp
             
-            # Prepare alert
+            # Get timestamp and convert to ISO format if it's a datetime
+            timestamp = alert_data.get('timestamp', datetime.now())
+            if isinstance(timestamp, datetime):
+                timestamp = timestamp.isoformat()
+            
+            # Prepare alert with sanitized data
             alert = {
                 'id': alert_id,
-                'timestamp': alert_data.get('timestamp', datetime.now()),
+                'timestamp': timestamp,
                 'event_type': alert_data.get('event_type', 'unknown'),
                 'severity': alert_data.get('severity', 'medium'),
                 'confidence': alert_data.get('confidence', 0.0),
                 'description': alert_data.get('description', 'Anomaly detected'),
-                'event_data': alert_data.get('event_data', {}),
+                'event_data': sanitize_datetime_objects(alert_data.get('event_data', {})),
                 'acknowledged': False,
                 'false_positive': False,
-                'created_at': datetime.now()
+                'created_at': datetime.now().isoformat()
             }
             
             # Check if alert should be created based on severity threshold
@@ -179,7 +186,7 @@ class AlertManager:
     def _log_alert(self, alert: Dict[str, Any]):
         """Log alert to security audit log"""
         try:
-            from ..utils.logger import SecurityAuditLogger
+            from utils.logger import SecurityAuditLogger
             
             audit_logger = SecurityAuditLogger()
             audit_logger.log_anomaly_detection(
@@ -202,7 +209,7 @@ class AlertManager:
                 for alert in self.active_alerts:
                     if alert['id'] == alert_id:
                         alert['acknowledged'] = True
-                        alert['acknowledged_at'] = datetime.now()
+                        alert['acknowledged_at'] = datetime.now().isoformat()
                         alert['acknowledged_by'] = acknowledged_by
                         
                         self.logger.info(f"Alert acknowledged: {alert_id} by {acknowledged_by}")
@@ -223,7 +230,7 @@ class AlertManager:
                     if alert['id'] == alert_id:
                         alert['false_positive'] = True
                         alert['acknowledged'] = True
-                        alert['acknowledged_at'] = datetime.now()
+                        alert['acknowledged_at'] = datetime.now().isoformat()
                         alert['acknowledged_by'] = marked_by
                         
                         # Update statistics

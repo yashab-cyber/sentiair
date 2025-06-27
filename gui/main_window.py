@@ -20,11 +20,11 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import QTimer, Qt, QThread, pyqtSignal, QSize
 from PyQt5.QtGui import QIcon, QFont, QPalette, QColor, QPixmap
 
-from .dashboard_widget import DashboardWidget
-from .alerts_widget import AlertsWidget
-from .monitoring_widget import MonitoringWidget
-from .reports_widget import ReportsWidget
-from .settings_widget import SettingsWidget
+from gui.dashboard_widget import DashboardWidget
+from gui.alerts_widget import AlertsWidget
+# from gui.monitoring_widget import MonitoringWidget  # Not implemented yet
+# from gui.reports_widget import ReportsWidget  # Not implemented yet  
+# from gui.settings_widget import SettingsWidget  # Not implemented yet
 
 class SentinairGUI:
     """Main GUI application for Sentinair"""
@@ -201,17 +201,17 @@ class SentinairGUI:
         self.alerts_widget = AlertsWidget(self.engine, self.config)
         self.tab_widget.addTab(self.alerts_widget, "Alerts")
         
-        # Monitoring tab
-        self.monitoring_widget = MonitoringWidget(self.engine, self.config)
-        self.tab_widget.addTab(self.monitoring_widget, "Monitoring")
+        # Monitoring tab (placeholder)
+        # self.monitoring_widget = MonitoringWidget(self.engine, self.config)
+        # self.tab_widget.addTab(self.monitoring_widget, "Monitoring")
         
-        # Reports tab
-        self.reports_widget = ReportsWidget(self.engine, self.config)
-        self.tab_widget.addTab(self.reports_widget, "Reports")
+        # Reports tab (placeholder)
+        # self.reports_widget = ReportsWidget(self.engine, self.config)
+        # self.tab_widget.addTab(self.reports_widget, "Reports")
         
-        # Settings tab
-        self.settings_widget = SettingsWidget(self.engine, self.config)
-        self.tab_widget.addTab(self.settings_widget, "Settings")
+        # Settings tab (placeholder)
+        # self.settings_widget = SettingsWidget(self.engine, self.config)
+        # self.tab_widget.addTab(self.settings_widget, "Settings")
         
     def _create_status_bar(self):
         """Create status bar"""
@@ -423,7 +423,8 @@ class SentinairGUI:
         except Exception as e:
             self.logger.error(f"Error exporting data: {e}")
             QMessageBox.critical(self.main_window, "Error", f"Failed to export data: {e}")
-              def _show_about(self):
+    
+    def _show_about(self):
         """Show about dialog"""
         about_text = """
 <h2>Sentinair</h2>

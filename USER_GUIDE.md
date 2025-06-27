@@ -1,5 +1,18 @@
 # Sentinair User Guide
 
+> **📚 NEW: Comprehensive Manual Available**  
+> For the most up-to-date and detailed documentation, please see the new structured manual in the `/manual` directory:
+> - **[Manual Overview](manual/README.md)** - Complete documentation index
+> - **[Installation Guide](manual/01-installation.md)** - Detailed setup instructions
+> - **[Quick Start Guide](manual/02-quickstart.md)** - Get started quickly
+> - **[Configuration Guide](manual/03-configuration.md)** - System configuration
+> - **[GUI Guide](manual/04-gui-guide.md)** & **[CLI Guide](manual/05-cli-guide.md)** - Interface guides
+> - **[Troubleshooting](manual/13-troubleshooting.md)** - Problem solving
+>
+> This document remains available for reference but may not be as current as the manual.
+
+---
+
 ## Table of Contents
 1. [Overview](#overview)
 2. [Installation](#installation)
