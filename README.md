@@ -10,10 +10,10 @@
 ![Offline](https://img.shields.io/badge/offline-capable-brightgreen.svg)
 ![Security](https://img.shields.io/badge/security-threat%20detection-red.svg)
 ![Status](https://img.shields.io/badge/status-stable-brightgreen.svg)
-![GitHub Issues](https://img.shields.io/github/issues/yashab-cyber/sentinair)
-![GitHub Stars](https://img.shields.io/github/stars/yashab-cyber/sentinair)
-![GitHub Forks](https://img.shields.io/github/forks/yashab-cyber/sentinair)
-![GitHub Last Commit](https://img.shields.io/github/last-commit/yashab-cyber/sentinair)
+![GitHub Issues](https://img.shields.io/github/issues/yashab-cyber/sentiair)
+![GitHub Stars](https://img.shields.io/github/stars/yashab-cyber/sentiair)
+![GitHub Forks](https://img.shields.io/github/forks/yashab-cyber/sentiair)
+![GitHub Last Commit](https://img.shields.io/github/last-commit/yashab-cyber/sentiair)
 
 ## Overview
 Sentinair is an advanced offline AI-based Intrusion Detection System tailored for isolated environments such as air-gapped military, industrial, or banking systems. It monitors system behavior patterns and flags anomalies using machine learning - all without needing internet connectivity.
